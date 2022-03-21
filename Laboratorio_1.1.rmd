@@ -130,8 +130,21 @@ conceptos_df[1:10, c('tema', 'total')]
 
 4.  Liste las 10 localidades que más participaron en el proceso. Describa cómo definió su medida de participación.
 
+**Respuesta: Definimos un indice de participacion, que corresponde al producto entre la suma de frecuencia de los temas y el numero de temas distintos que se discutieron normalizados.**
+
 ```{r}
-# RESPUESTA
+# RESPUESTA patriotismo_df <- data_tf %>% filter(patriotismo > 0)
+sumafila <- rowSums(data_tf[,2:113])
+distcero <- rowSums(data_tf[,2:113]!=0)
+
+sumafila <- sumafila/max(sumafila)
+distcero <- distcero/max(distcero)
+
+participacion_df <- data.frame(localidad = data_tf$localidad, nvotos = sumafila, temasdistintos=distcero, indiceparti = sumafila*distcero)
+
+participacion_df <- participacion_df[order(participacion_df$indiceparti, decreasing=TRUE),]
+participacion_df[1:10, c('localidad', 'indiceparti')]
+
 ```
 
 5.  Ejecute el siguiente código que permitirá agregar una nueva columna a nuestro dataframe que solo tendrá el nombre de la región.
@@ -153,16 +166,70 @@ Cabe resaltar, que se esperan tres gráficos de barras para las tres diferentes 
 
 ```{r}
 # 10 conceptos más mencionados en Coquimbo
+df_coq <- data_tf %>% filter(region == 'Coquimbo')
+
+totales <- colSums(df_coq[,3:114])
+temas <- colnames(df_coq)[3:114]
+
+d <- data.frame(tema = temas,
+                 total = totales)
+conceptos_df <- d[order(d$total, decreasing=TRUE),]
+
+coquimbo <- conceptos_df[1:10, c('tema', 'total')]
+
+
+library(ggplot2)
+
+ggplot(coquimbo) +
+  geom_bar(aes(x = reorder(tema, total), y = total), stat='identity') +
+  coord_flip() +
+  ggtitle('Temas mas mencionados Coquimbo')
 ```
 
 ```{r}
 # 10 conceptos más mencionados en Antofagasta
+
+df_ant <- data_tf %>% filter(region == 'Antofagasta')
+
+totales <- colSums(df_ant[,3:114])
+temas <- colnames(df_ant)[3:114]
+
+d <- data.frame(tema = temas,
+                 total = totales)
+conceptos_df <- d[order(d$total, decreasing=TRUE),]
+
+antofagasta <- conceptos_df[1:10, c('tema', 'total')]
+
+
+ggplot(antofagasta) +
+  geom_bar(aes(x = reorder(tema, total), y = total), stat='identity') +
+  coord_flip() +
+  ggtitle('Temas mas mencionados Antofagasta')
 ```
 
 ```{r}
 # 10 conceptos más mencionados en Metropolitana de Santiago
+
+df_san <- data_tf %>% filter(region == 'Metropolitana de Santiago')
+
+totales <- colSums(df_san[,3:114])
+temas <- colnames(df_san)[3:114]
+
+d <- data.frame(tema = temas,
+                 total = totales)
+conceptos_df <- d[order(d$total, decreasing=TRUE),]
+
+santiago <- conceptos_df[1:10, c('tema', 'total')]
+
+
+ggplot(santiago) +
+  geom_bar(aes(x = reorder(tema, total), y = total), stat='identity') +
+  coord_flip() +
+  ggtitle('Temas mas mencionados Santiago')
 ```
 
 6.  De la pregunta anterior, ¿considera que es razonable usar el conteo de frecuencias para determinar las regiones que tuvieron mayor participación en el proceso? ¿Por qué? Sugiera y solamente comente una forma distinta de hacerlo.
 
-**Respuesta:**
+**Respuesta: El sumar la frecuencia de los temas mencionados por localidad no indica directamente la cantidad de gente que participó en el proceso, solo nos indica el numero de veces que fue discutido en los cabildos o en consulta individual. Al no saber el numero de gente que participo en estas reuniones la relacion de tema mencionado y partipacion ya no es directa.**
+
+**Tambien esta el caso en que se hayan discutido muchos temas variados en vez de solamente uno en profundidad y/o varias veces. Es por eso que en la pregunta anterior decidimos crear un indice de participacion en el intento de reflejar estos dos escenarios, ponderando la cantidad de temas discutidos con la frecuencia en la que se discutieron. **
