@@ -12,7 +12,7 @@ output:
 
 # Declaración de compromiso ético
 
-Nosotros **Camila Henriquez Beltran, Pablo Yañez **, declaramos que realizamos de manera grupal los pasos de la presente actividad. También declaramos no incurrir en copia, ni compartir nuestras respuestas con otras personas ni con otros grupos. Por lo que, ratificamos que las respuestas son de nuestra propia confección y reflejan nuestro propio conocimiento.
+Nosotros **Camila Henriquez Beltran, Pablo Yañez** , declaramos que realizamos de manera grupal los pasos de la presente actividad. También declaramos no incurrir en copia, ni compartir nuestras respuestas con otras personas ni con otros grupos. Por lo que, ratificamos que las respuestas son de nuestra propia confección y reflejan nuestro propio conocimiento.
 
 # Instrucciones
 
@@ -34,19 +34,19 @@ La primera parte de esta actividad son preguntas teóricas que avanzaron en las 
 
 *1. ¿Cuál es el objetivo de la Minería de datos y qué la diferencia de Machine Learning? De un ejemplo para explicar la diferencia.*
 
-**Respuesta: -data mining -> entender a partir de datos desordenados , ML -> predecir a partir de problemas especificos**
+**Respuesta:**
 
 *2. Explique qué son los métodos predictivos y descriptivos en minería de datos. De un ejemplo de técnicas en cada uno de los métodos y explique su utilidad*
 
-**Respuesta: predict: a partir de caracteristicas de los datos se pueden hacer inferencias sobre futuros valores que se quieran estudiar, mientras que los descriptivos buscan patrones que describan los datos. Clasif predict, Clustering descript. **
+**Respuesta:**
 
 *3. ¿Qué es el análisis exploratorio de datos o EDA?*
 
-**Respuesta: Es la primera aproximacion que se hace para estudiar los datos, se calculan distintos estadisticos de forma que la info contenida pueda ser interpretada mas facilmente. Por ejemplo calcular la media, desviacion estandar, ver que tipo de datos se tiene, ver si los datos distribuyen de forma especifica, etc **
+**Respuesta:**
 
 *4. Explique cómo se identifican los valores atípicos u outliers en un boxplot y cuál es su utilidad.*
 
-**Respuesta: El diagrama de caja tiene demarcados los cuartiles de la muestra, los outliers estan representados fuera del rango de este boxplot (las pestañas que salen de las cajas). El boxplot, muestra la mediana y los demas cuartiles, al representar los cuartiles permite visualizar rapidamente como estan distribuidos (donde se concentran los datos, el RIC) los datos y ver cuando los datos son outliers.**
+**Respuesta:**
 
 ## Práctica
 
@@ -64,8 +64,7 @@ data_tf <- read.csv("http://dcc.uchile.cl/~hsarmien/mineria/datasets/actas.txt",
 
 ### Exploración básica
 
-1.  ¿Cuáles son las dimensiones del dataset (filas, columnas)? Adjunte código o indique cómo determinó la cantidad de datos total.
-**Respuesta: Hay multiples formas de ver las dimensiones del dataset; Una vez cargada la variable data_tf es posible verla en la ventana de RStudio donde se muestran las variables cargadas, en este caso es posible ver que el dataaset tiene 328 obs y 113 varibales, lo que corresponde a 328 filas y 113 columnas. Otra forma es ocupar las funciones dim o nrow y ncol como se ve en el cuadro de abajo:**
+1.  ¿Cuáles son las dimensiones del dataset (filas, columnas)? Adjunte código o indique cómo determinó la cantidad de datos total. **Respuesta: Hay multiples formas de ver las dimensiones del dataset; Una vez cargada la variable data_tf es posible verla en la ventana de RStudio donde se muestran las variables cargadas, en este caso es posible ver que el dataaset tiene 328 obs y 113 varibales, lo que corresponde a 328 filas y 113 columnas. Otra forma es ocupar las funciones dim o nrow y ncol como se ve en el cuadro de abajo:**
 
 ```{r}
 # RESPUESTA
@@ -78,16 +77,22 @@ ncol(data_tf)
 
 ```{r}
 # RESPUESTA
-head(data_tf)
 #fila 45
 data_tf[45,]
 
 ```
-**Respuesta: Cada linea en el dataset representa la frecuencia con que cada concepto constitucional (columnas) fue mencionado en la localidad indicada. Así, tomando como ejemplo la fila 45 del dataset tenemos que el concepto 'a huelga' fue mencionado una vez  **
+
+**Respuesta: Cada linea en el dataset representa la frecuencia con que cada concepto constitucional (columnas) fue mencionado en la localidad indicada. Así, tomando como ejemplo la fila 45 del dataset tenemos que el concepto 'a huelga' fue mencionado una vez, 'a la educacion' 2 veces, etc.**
+
 3.  ¿Existen localidades repetidas en el dataset? Adjunte el código o indique cómo llegó a esa conclusión.
+
+**Respuesta: Tenemos la funcion implementada 'unique' que cuenta los valores unicos de la columna que le entregamos. Con esto, basta con que el numero de filas del dataset con el numero de valores unicos por localidades sean iguales para concluir que no hay localidades repetidas en el dataset, tal como se muestra en el cuadro de abajo.**
 
 ```{r}
 # RESPUESTA
+length(unique(data_tf$localidad))
+nrow(data_tf)
+
 ```
 
 ### Análisis
@@ -95,19 +100,32 @@ data_tf[45,]
 1.  Liste todas las localidades donde se discutió el concepto `patriotismo`.
 
 ```{r}
+library(tidyverse)
 # RESPUESTA
+patriotismo_df <- data_tf %>% filter(patriotismo > 0)  #se menciona 1 o mas veces patriotismo
+patriotismo_df$localidad
+
 ```
 
 2.  Liste las 10 localidades que más mencionaron el concepto plurinacionalismo.
 
 ```{r}
 # RESPUESTA
+pluri_df <- data_tf[order(data_tf$plurinacionalismo, decreasing=TRUE),]
+pluri_df[1:10, c('localidad','plurinacionalismo')]
 ```
 
 3.  Liste los 10 conceptos más mencionados a lo largo de todo el proceso.
 
 ```{r}
 # RESPUESTA
+totales <- colSums(data_tf[,2:113])
+temas <- colnames(data_tf)[2:113]
+
+d <- data.frame( tema = temas,
+                 total = totales)
+conceptos_df <- d[order(d$total, decreasing=TRUE),]
+conceptos_df[1:10, c('tema', 'total')]
 ```
 
 4.  Liste las 10 localidades que más participaron en el proceso. Describa cómo definió su medida de participación.
