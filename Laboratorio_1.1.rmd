@@ -34,19 +34,19 @@ La primera parte de esta actividad son preguntas teóricas que avanzaron en las 
 
 *1. ¿Cuál es el objetivo de la Minería de datos y qué la diferencia de Machine Learning? De un ejemplo para explicar la diferencia.*
 
-**Respuesta:**
+**Respuesta: -data mining -> entender a partir de datos desordenados , ML -> predecir a partir de problemas especificos**
 
 *2. Explique qué son los métodos predictivos y descriptivos en minería de datos. De un ejemplo de técnicas en cada uno de los métodos y explique su utilidad*
 
-**Respuesta:**
+**Respuesta: predict: a partir de caracteristicas de los datos se pueden hacer inferencias sobre futuros valores que se quieran estudiar, mientras que los descriptivos buscan patrones que describan los datos. Clasif predict, Clustering descript. **
 
 *3. ¿Qué es el análisis exploratorio de datos o EDA?*
 
-**Respuesta:**
+**Respuesta: Es la primera aproximacion que se hace para estudiar los datos, se calculan distintos estadisticos de forma que la info contenida pueda ser interpretada mas facilmente. Por ejemplo calcular la media, desviacion estandar, ver que tipo de datos se tiene, ver si los datos distribuyen de forma especifica, etc **
 
 *4. Explique cómo se identifican los valores atípicos u outliers en un boxplot y cuál es su utilidad.*
 
-**Respuesta:**
+**Respuesta: El diagrama de caja tiene demarcados los cuartiles de la muestra, los outliers estan representados fuera del rango de este boxplot (las pestañas que salen de las cajas). El boxplot, muestra la mediana y los demas cuartiles, al representar los cuartiles permite visualizar rapidamente como estan distribuidos (donde se concentran los datos, el RIC) los datos y ver cuando los datos son outliers.**
 
 ## Práctica
 
