@@ -1,0 +1,150 @@
+---
+title: 'Laboratorio 1.1: Exploración y visualización de Datos'
+date: "Marzo 2022"
+author: 'Camila Henriquez Beltran, Pablo Yañez'
+output:
+  html_document:
+    theme: default
+    toc: no
+  pdf_document:
+    toc: no
+---
+
+# Declaración de compromiso ético
+
+Nosotros **Camila Henriquez Beltran, Pablo Yañez **, declaramos que realizamos de manera grupal los pasos de la presente actividad. También declaramos no incurrir en copia, ni compartir nuestras respuestas con otras personas ni con otros grupos. Por lo que, ratificamos que las respuestas son de nuestra propia confección y reflejan nuestro propio conocimiento.
+
+# Instrucciones
+
+1.  Trabajen en equipos de dos personas. Salvo excepciones, no se corregirá entregas con menos de dos integrantes.
+
+2.  Modifique este archivo `.Rmd` agregando sus respuestas donde corresponda.
+
+3.  Para cada pregunta, cuando corresponda, **incluya el código fuente que utilizó para llegar a su respuesta**.
+
+4.  El formato de entrega para esta actividad es un archivo html. **Genere un archivo HTML usando RStudio** y súbalo a U-Cursos.
+
+Basta con que uno de los integrantes haga la entrega. Si ambos hacen una entrega en U-Cursos, se revisará cualquiera de éstas.
+
+# Laboratorio
+
+La primera parte de esta actividad son preguntas teóricas que avanzaron en las clases del curso de Minería de datos.
+
+## Teoría
+
+*1. ¿Cuál es el objetivo de la Minería de datos y qué la diferencia de Machine Learning? De un ejemplo para explicar la diferencia.*
+
+**Respuesta:**
+
+*2. Explique qué son los métodos predictivos y descriptivos en minería de datos. De un ejemplo de técnicas en cada uno de los métodos y explique su utilidad*
+
+**Respuesta:**
+
+*3. ¿Qué es el análisis exploratorio de datos o EDA?*
+
+**Respuesta:**
+
+*4. Explique cómo se identifican los valores atípicos u outliers en un boxplot y cuál es su utilidad.*
+
+**Respuesta:**
+
+## Práctica
+
+En esta parte de la actividad se trabajará con los datos del Proceso Constituyente 2016-2017 publicados en el Portal de Datos Abiertos del Gobierno de Chile, para mayor información pueden ingresar al siguiente link: <https://datos.gob.cl/dataset/proceso-constituyente-abierto-a-la-ciudadania>. Los datos corresponden a las actas de los Encuentros Locales Autoconvocados (ELAs), en cada cual, un grupo de personas se reune a discutir distintos conceptos como por ejemplo: salud, educación, seguridad, etc.
+
+Los datos con los que trabajarán consisten en la cantidad de veces que cada concepto constitucional fue mencionado por cada localidad de Chile.
+
+Para cargar los datos, use:
+
+```{r}
+data_tf <- read.csv("http://dcc.uchile.cl/~hsarmien/mineria/datasets/actas.txt", header = T)
+```
+
+**Por cada pregunta adjunte el código R que utilizó para llegar a la respuesta. Respuestas sin código no recibirán puntaje**
+
+### Exploración básica
+
+1.  ¿Cuáles son las dimensiones del dataset (filas, columnas)? Adjunte código o indique cómo determinó la cantidad de datos total.
+**Respuesta: Hay multiples formas de ver las dimensiones del dataset; Una vez cargada la variable data_tf es posible verla en la ventana de RStudio donde se muestran las variables cargadas, en este caso es posible ver que el dataaset tiene 328 obs y 113 varibales, lo que corresponde a 328 filas y 113 columnas. Otra forma es ocupar las funciones dim o nrow y ncol como se ve en el cuadro de abajo:**
+
+```{r}
+# RESPUESTA
+dim(data_tf)
+nrow(data_tf)
+ncol(data_tf)
+```
+
+2.  ¿Qué describe cada línea del dataset? (ejemplifique tomando la fila 45)
+
+```{r}
+# RESPUESTA
+head(data_tf)
+#fila 45
+data_tf[45,]
+
+```
+**Respuesta: Cada linea en el dataset representa la frecuencia con que cada concepto constitucional (columnas) fue mencionado en la localidad indicada. Así, tomando como ejemplo la fila 45 del dataset tenemos que el concepto 'a huelga' fue mencionado una vez  **
+3.  ¿Existen localidades repetidas en el dataset? Adjunte el código o indique cómo llegó a esa conclusión.
+
+```{r}
+# RESPUESTA
+```
+
+### Análisis
+
+1.  Liste todas las localidades donde se discutió el concepto `patriotismo`.
+
+```{r}
+# RESPUESTA
+```
+
+2.  Liste las 10 localidades que más mencionaron el concepto plurinacionalismo.
+
+```{r}
+# RESPUESTA
+```
+
+3.  Liste los 10 conceptos más mencionados a lo largo de todo el proceso.
+
+```{r}
+# RESPUESTA
+```
+
+4.  Liste las 10 localidades que más participaron en el proceso. Describa cómo definió su medida de participación.
+
+```{r}
+# RESPUESTA
+```
+
+5.  Ejecute el siguiente código que permitirá agregar una nueva columna a nuestro dataframe que solo tendrá el nombre de la región.
+
+```{r, message = F, warning=F}
+library(dplyr)
+regiones <- strsplit(as.character(data_tf[,1]), '/')
+data_tf$region <- sapply(regiones, "[[", 1)
+data_tf <- data_tf %>% select(localidad, region, everything())
+```
+
+Luego, genere un gráfico de barras (ggplot) que muestre los 10 conceptos más mencionados en cada una de las regiones mencionadas (adjunte gráficos y código). Los conceptos deben mostrarse ordenados descendentemente.
+
+-   `Coquimbo`
+-   `Antofagasta`
+-   `Metropolitana de Santiago`
+
+Cabe resaltar, que se esperan tres gráficos de barras para las tres diferentes regiones:
+
+```{r}
+# 10 conceptos más mencionados en Coquimbo
+```
+
+```{r}
+# 10 conceptos más mencionados en Antofagasta
+```
+
+```{r}
+# 10 conceptos más mencionados en Metropolitana de Santiago
+```
+
+6.  De la pregunta anterior, ¿considera que es razonable usar el conteo de frecuencias para determinar las regiones que tuvieron mayor participación en el proceso? ¿Por qué? Sugiera y solamente comente una forma distinta de hacerlo.
+
+**Respuesta:**
