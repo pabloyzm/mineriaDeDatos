@@ -34,11 +34,12 @@ La primera parte de esta actividad son preguntas teóricas que avanzaron en las 
 
 *1. ¿Cuál es el objetivo de la Minería de datos y qué la diferencia de Machine Learning? De un ejemplo para explicar la diferencia.*
 
-**Respuesta:**
+**Respuesta: La minería de datos tiene el objetivo de ayudarnos a entender nuestros datos y darles sentido, como por ejemplo el clustering que nos permite extraer patrones de agrupación de los datos, mientras que el Machine Learning se enfoca en resolver una tarea más específica, por ejemplo clasificar imagenes de perros y gatos. En este caso el Data Mining nos podría haber servido para identificar que existen dos clases en nuestro conjunto (perros y gatos) y el machine learning para hacer inferencia sobre datos nuevos.**
 
 *2. Explique qué son los métodos predictivos y descriptivos en minería de datos. De un ejemplo de técnicas en cada uno de los métodos y explique su utilidad*
 
-**Respuesta:**
+**Respuesta: Los métodos predictivos se centran en la inferencia a partir de los datos usados como entrenamiento, mientras que los métodos descriptivos intentan 
+descubrir patrones antes no vistos para ser usados en otras tareas, un ejemplo de método predictivo es la regresión que nos permite predecir el valor de una variable que depende de otras (lineal o no linealmente), por ejemplo una serie de tiempo (°Temperatura). Por otro lado, un ejemplo de método descriptivo sería una regla de asosiación entre productos de un e-commerce para hacer recomendaciones personalizadas.**
 
 *3. ¿Qué es el análisis exploratorio de datos o EDA?*
 
